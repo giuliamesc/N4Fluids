@@ -1,5 +1,5 @@
 // CRISS-CROSS MESH, NEDELEC
-
+ofstream file1("lambda1.dat");
 int I = 6;
 real [int] hvect (I);
 real [int] error (I);
@@ -10,8 +10,8 @@ real y0 = 0;
 real y1 = pi;
 
 verbosity=0;
-real sigma = 20; //value of the shift
-int nev = 20; //number of computed eigen value close to sigma
+real sigma = 30; //value of the shift
+int nev = 40; //number of computed eigen values near to sigma
 
 for(int i=0; i<I; i++){
 //Mesh
@@ -42,5 +42,6 @@ int k = EigenValue(OP, B, sym=true, sigma=sigma, value=ev, tol=1e-10, maxit=0, n
 // Display & Plot
 for (int j = 0; j < k; j++){
 cout << "lambda[" << j << "] = " << ev[j] << endl;
+if(i=I-1){file1 << ev[j] << endl;}
 }
 }
