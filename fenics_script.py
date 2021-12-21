@@ -6,6 +6,7 @@ Created on Tue Dec 21 15:37:56 2021
 """
 
 from dolfin import *
+from dolfin import UnitSquareMesh, XDMFFile
 import numpy as np
 if not has_linear_algebra_backend("PETSc"):
     print("DOLFIN has not been configured with PETSc. Exiting.")
@@ -67,7 +68,15 @@ mesh = RectangleMesh(Point(0, 0), Point(pi, pi), 40, 40)
 print("\ndiagonal mesh")
 print_eigenvalues(mesh)
 
-mesh = RectangleMesh(Point(0, 0), Point(pi, pi), 40, 40, "crossed")
+mesh = RectangleMesh(Point(0, 0), Point(pi, pi), 20, 20, "crossed")
+xdmf = XDMFFile("mesh.xdmf")
+xdmf.write(mesh)
+xdmf.close()
+
+import meshio
+meshio_mesh = meshio.read("mesh.xdmf")
+meshio.write("meshio_mesh.msh", meshio_mesh)
+
 print("\ncrossed mesh")
 print_eigenvalues(mesh)
     
