@@ -12,8 +12,8 @@ real y1 = pi;
 verbosity=0;
 real sigma = 25; //value of the shift
 int nev = 30; //number of computed eigen values near to sigma
-
-for(int i=0; i<I; i++){
+int i = 5;
+//for(int i=0; i<I; i++){
 //Mesh
 mesh Th = square(2^(i+2),2^(i+2),[x0+(x1-x0)*x, y0+(y1-y0)*y]);
 plot(Th);
@@ -43,4 +43,4 @@ for (int j = 0; j < k; j++){
 cout << "lambda[" << j << "] = " << ev[j] << endl;
 if(i=I-1){file1 << ev[j] << endl;}
 }
-}
+//}
