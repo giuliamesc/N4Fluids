@@ -10,9 +10,9 @@ real a = 0;
 real b = pi;
 
 //We will use the Shift-invert method to solve the eigenvalue problem A*u = lambda*B*u
-//To do that, we need to specify the value of the shift
-real sigma = 16;
-real tolerance = -0.5;
+//To do that, we need to specify the value of the shift, which will be a function of the eigenvalue
+real sigma = 0;
+real tolerance = -0.5; //Small correction to put in the shift
 
 //We also need to specify the number of eigenvalues to compute
 int nev = 1; //Only 1 because convergence test
@@ -25,7 +25,7 @@ int N = 7;
 real omega2 = 0;
 
 //Number of refinements
-int I = 8;
+int I = 5;
 
 for(int i = 3; i <= I; i++)
 { 
@@ -43,11 +43,6 @@ for(int i = 3; i <= I; i++)
     //FEspace
     fespace Vh(Th, RT0Ortho);
     Vh [u1, u2], [v1, v2];
-
-    // //Get mesh size
-    // fespace Qh(Th, P0);
-    // Qh h = hTriangle;
-    // hvect[i] = h[].max;
 
     //Solve the problem for each valid couple (n,m)
     for(int n = 0; n < N; n++)
@@ -89,10 +84,3 @@ for(int i = 3; i <= I; i++)
     cout << endl;
 }
 
-
-
-
-// //Write results in a file
-// for (int j = 0; j < k; j++){
-//     file << ev[j] << endl;
-// }   
