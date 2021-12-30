@@ -36,7 +36,7 @@ def eigenvalues(V, bcs):
     
     solver.parameters["spectrum"] = "target magnitude"
     solver.parameters["spectral_transform"] = "shift-and-invert"
-    solver.parameters["spectral_shift"] = 22.0
+    solver.parameters["spectral_shift"] = 18.5
     neigs = 40
     solver.solve(neigs)
     
