@@ -1,3 +1,4 @@
+///Code to run convergence tests in order to settle on a suitable refinement level
 ///Unstructured mesh with Nedelec elements
 string meshType = "unstructured";
 string elemType = "Nedelec_convergence";
@@ -80,7 +81,5 @@ for(int i = 3; i <= I; i++)
             }
         }
     }
-
     cout << endl;
 }
-
