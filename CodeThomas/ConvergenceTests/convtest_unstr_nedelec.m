@@ -32,6 +32,7 @@ err(5) = max(abs(omega2-ref7));
 err(6) = max(abs(omega2-ref8));
 
 plot([3:2 + nbRefs],err,'r*-')
+yline(2e-2,'g')
 hold on
 grid on
 legend('Error trend','Tolerance')
