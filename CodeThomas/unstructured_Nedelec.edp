@@ -19,7 +19,7 @@ real sigma = 26;
 //We also need to specify the number of eigenvalues to compute
 int nev = 48;
 
-//Prepare vectors to store the eigenvalues and eigenvectors
+//Prepare vectors to store the eigenvalues
 real[int] ev(nev);
 
 //Build mesh
