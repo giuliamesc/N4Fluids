@@ -1,4 +1,5 @@
 % Loading numerical solution
+addpath('../Unstructured Mesh/');
 eig_Ned = load('lambda_unstructured_Nedelec.dat')';
 
 % Generating the first 40 exact eigenvalues
