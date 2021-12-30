@@ -17,7 +17,7 @@ real tolerance = -0.5; //Small correction to put in the shift
 //We also need to specify the number of eigenvalues to compute
 int nev = 1; //Only 1 because convergence test
 
-//Prepare vectors to store the eigenvalues and eigenvectors
+//Prepare vectors to store the eigenvalues
 real[int] ev(nev);
 
 //Setup number of values for n and m, prepare variable for eigenvalue
