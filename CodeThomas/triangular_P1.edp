@@ -3,12 +3,7 @@ string meshType = "triangular";
 string elemType = "P1";
 
 //Number of refinements
-int I = 6;
-int i = 5;
-
-//Prepare convergence vectors
-real[int] hvect(I);
-real[int] error(I);
+int i = 7;
 
 //Prepare output file
 ofstream file ("lambda_" + meshType + "_" + elemType + ".dat");
@@ -21,47 +16,39 @@ real y1 = pi;
 
 //We will use the Shift-invert method to solve the eigenvalue problem A*u = lambda*B*u
 //To do that, we need to specify the value of the shift
-real sigma = 16;
+real sigma = 26.5;
 
 //We also need to specify the number of eigenvalues to compute
-int nev = 30;
+int nev = 48;
 
 //Prepare vectors to store the eigenvalues and eigenvectors
 real[int] ev(nev);
 
-// for(int i = 0; i < I; i++)
-// {
-    //Build mesh
-    mesh Th = square(2^(i+2), 2^(i+2), [x0+(x1-x0)*x, y0+(y1-y0)*y]);
-    plot(Th);
+//Build mesh
+mesh Th = square(2^i, 2^i, [x0+(x1-x0)*x, y0+(y1-y0)*y]);
+// plot(Th);
 
-    //FEspace
-    fespace Vh(Th, [P1,P1]);
-    Vh [u1, u2], [v1, v2];
+//FEspace
+fespace Vh(Th, [P1,P1]);
+Vh [u1, u2], [v1, v2];
 
-    //Get mesh size
-    fespace Qh(Th, P0);
-    Qh h = hTriangle;
-    hvect[i] = h[].max;
+//Setup problem in variational form using the Shift-invert method
 
-    //Setup problem in variational form using the Shift-invert method
-    
-    varf op([u1, u2], [v1, v2]) = int2d(Th)(dx(u2)*dx(v2) - dy(u1)*dx(v2) - dx(u2)*dy(v1) + dy(u1)*dy(v1))
-                                - int2d(Th)(sigma * (u1*v1 + u2*v2))
-                                + on(1,2,3,4, u1=0, u2=0);
+varf op([u1, u2], [v1, v2]) = int2d(Th)(dx(u2)*dx(v2) - dy(u1)*dx(v2) - dx(u2)*dy(v1) + dy(u1)*dy(v1))
+                            - int2d(Th)(sigma * (u1*v1 + u2*v2))
+                            + on(1,2,3,4, u1=0, u2=0);
 
-    varf b([u1, u2], [v1, v2])  = int2d(Th)(u1*v1 + u2*v2); 
+varf b([u1, u2], [v1, v2])  = int2d(Th)(u1*v1 + u2*v2); 
 
-    //Translate into matrix problem and specify solvers
-    //OP = A - sigma B and we want to solve OPw = Bu
-    matrix OP = op(Vh, Vh, solver=Crout, factorize=1); //use Crout solver because the matrix is not positive
-    matrix B  = b(Vh, Vh, solver=CG, eps=1e-20);
+//Translate into matrix problem and specify solvers
+//OP = A - sigma B and we want to solve OPw = Bu
+matrix OP = op(Vh, Vh, solver=Crout, factorize=1); //use Crout solver because the matrix is not positive
+matrix B  = b(Vh, Vh, solver=CG, eps=1e-20);
 
-    //Solve the eigenvalue problem and store the number of eigenvalues in k
-    int k = EigenValue(OP, B, sym=true, sigma=sigma, value=ev, tol=1e-10, maxit=0, ncv=0);
+//Solve the eigenvalue problem and store the number of eigenvalues in k
+int k = EigenValue(OP, B, sym=true, sigma=sigma, value=ev, tol=1e-10, maxit=0, ncv=0);
 
-    //Write results in a file
-    for (int j = 0; j < k; j++){
-        file << ev[j] << endl;
-    }   
-// }
+//Write results in a file
+for (int j = 0; j < k; j++){
+    file << ev[j] << endl;
+}   
