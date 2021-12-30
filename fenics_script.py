@@ -36,8 +36,8 @@ def eigenvalues(V, bcs):
     
     solver.parameters["spectrum"] = "target magnitude"
     solver.parameters["spectral_transform"] = "shift-and-invert"
-    solver.parameters["spectral_shift"] = 5.5
-    neigs = 12
+    solver.parameters["spectral_shift"] = 22.0
+    neigs = 40
     solver.solve(neigs)
     
      # Return the computed eigenvalues in a sorted array
@@ -57,18 +57,20 @@ def print_eigenvalues(mesh):
                     DirichletBC(lagrange_V.sub(0), 0, "near(x[1], 0) || near(x[1], pi)")]
     lagrange_eig = eigenvalues(lagrange_V, lagrange_bcs)
     
-    true_eig = np.sort(np.array([float(m**2 + n**2) for m in range(6) for n in range(6)]))[1:13]
+    true_eig = np.sort(np.array([float(m**2 + n**2) for m in range(7) for n in range(7)]))[1:41]
+    errN = np.max(np.abs(nedelec_eig-true_eig))
+    errP1 = np.max(np.abs(lagrange_eig-true_eig))
     
-    np.set_printoptions(formatter={'float': '{:5.2f}'.format})
+    np.set_printoptions(formatter={'float': '{:5.6f}'.format})
     print("Nedelec:  {}".format(nedelec_eig))
     print("Lagrange: {}".format(lagrange_eig))
     print("Exact:    {}".format(true_eig))
+    print("ErrorN:   {}".format(errN))
+    print("ErrorP1:  {}".format(errP1))
     
-mesh = RectangleMesh(Point(0, 0), Point(pi, pi), 40, 40)
-print("\ndiagonal mesh")
-print_eigenvalues(mesh)
-
-mesh = RectangleMesh(Point(0, 0), Point(pi, pi), 20, 20, "crossed")
+i = 7
+N = 2**i
+mesh = RectangleMesh(Point(0, 0), Point(pi, pi), N, N, "crossed")
 xdmf = XDMFFile("mesh.xdmf")
 xdmf.write(mesh)
 xdmf.close()
