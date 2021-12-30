@@ -21,16 +21,26 @@ real y1 = pi;
 
 //We will use the Shift-invert method to solve the eigenvalue problem A*u = lambda*B*u
 //To do that, we need to specify the value of the shift
-real sigma = 25;
+real sigma = 16;
+
+//Declare variable to store real eigenvalue
+real omega2 = 0;
 
 //We also need to specify the number of eigenvalues to compute
-int nev = 30;
+int nev = 1;
 
 //Prepare vectors to store the eigenvalues and eigenvectors
 real[int] ev(nev);
 
-// for(int i = 0; i < I; i++)
-// {
+for(int i = 0; i < I; i++)
+{
+    for(n = 1; n <= N; n++){
+        for(m = 1; m <= M; m++){
+            omega2 = n*n + m*m;
+            //Solve problem for 1 eigval, look at discrete error and add it to the refinement error
+
+        }
+    }
     //Build mesh
     mesh Th = square(2^(i+2), 2^(i+2), [x0+(x1-x0)*x, y0+(y1-y0)*y]);
     plot(Th);
@@ -64,4 +74,4 @@ real[int] ev(nev);
     for (int j = 0; j < k; j++){
         file << ev[j] << endl;
     }   
-// }
+}
