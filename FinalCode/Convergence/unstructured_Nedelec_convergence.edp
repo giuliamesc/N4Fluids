@@ -26,7 +26,7 @@ int N = 7;
 real omega2 = 0;
 
 //Number of refinements
-int I = 7;
+int I = 8;
 
 for(int i = 3; i <= I; i++)
 { 
