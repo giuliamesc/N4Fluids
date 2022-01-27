@@ -20,5 +20,5 @@ This folder contains the Matlab files used to plot the results:
 
 ## Authors
 
-* [Giulia Mescolini](https://github.com/giuliamesc)
-* [Thomas Rimbot](https://github.com/Thomas-debug-creator)
+* [Giulia Mescolini](https://github.com/giuliamesc) :ghost:
+* [Thomas Rimbot](https://github.com/Thomas-debug-creator) 🕷️
